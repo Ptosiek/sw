@@ -1,0 +1,15 @@
+{% if instance %}
+<tbody hx-swap-oob="afterbegin:#collections-table">
+  <tr>
+    <th scope="row">{{ instance.id }}</th>
+    <td><a href="{% url 'core:collection-detail' instance.id %}">{{ instance.created|date:"DATETIME_FORMAT" }}</a></td>
+  </tr>
+</tbody>
+<div id="fetch-error" hx-swap-oob="true"></div>
+{% endif %}
+{% if error %}
+<div class="alert alert-danger" role="alert" id="fetch-error" hx-swap-oob="true">
+  {{error}}
+</div>
+{% endif %}
+Fetch

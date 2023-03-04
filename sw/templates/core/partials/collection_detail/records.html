@@ -1,0 +1,29 @@
+{% load static %}
+<table id="records-table" class="table">
+  <thead>
+    <tr>
+      {% for h in headers %}
+        <td>{{h}}</td>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody id="records">
+    {% for record in records %}
+      <tr>
+        {% for value in record %}
+          <td>{{ value }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    {% if next_page %}
+      <tr id="replaceMe" class="text-center">
+        <td colspan="{{ headers|length }}">
+          <button class='btn' hx-get="{% url 'core:collection-detail' collection.id %}?page={{ next_page | urlencode }}" hx-target="#replaceMe" hx-swap="outerHTML">
+            Load more...
+            <img class="htmx-indicator" src="{% static 'images/bars.svg' %}">
+          </button>
+        </td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>

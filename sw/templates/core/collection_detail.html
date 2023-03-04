@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{object.created|date:"DATETIME_FORMAT" }}</h3>
+
+<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+  {% for h in headers %}
+    <input type="checkbox" class="btn-check" id="btn-check-{{h}}" name="chk-{{h}}" autocomplete="off"
+           hx-post="{% url 'core:collection-detail' collection.id %}"
+           hx-target="#records-table" hx-include="[name*='chk']"
+           hx-swap="outerHTML"
+    >
+    <label class="btn btn-outline-primary" for="btn-check-{{h}}">{{h}}</label>
+  {% endfor %}
+</div>
+
+{% include "core/partials/collection_detail/records.html" %}
+{% endblock %}

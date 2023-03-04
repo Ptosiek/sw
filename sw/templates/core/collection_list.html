@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="mb-3">
+  <h3 class="d-inline">Collections</h3>
+  <button type="button" class="btn btn-success d-inline float-end" hx-get="{% url 'core:collection-fetch'%}">
+    Fetch
+    <img class="htmx-indicator" src="{% static 'images/bars.svg' %}">
+  </button>
+</div>
+<div id="fetch-error"></div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Downloaded</th>
+    </tr>
+  </thead>
+  <tbody id="collections-table">
+    {% for collection in object_list %}
+      <tr>
+        <th scope="row">{{ collection.id }}</th>
+        <td><a href="{% url 'core:collection-detail' collection.id %}">{{ collection.created|date:"DATETIME_FORMAT" }}</a></td>
+      </tr>
+    {% empty %}
+      <p>No collections yet.</p>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
